@@ -39,7 +39,7 @@ export class CosmosdbService
     return items.map(item => ({
       id: item.id,
       fileName: this.extractFileName(item.url),
-      createdTime: new Date(item._ts * 1000).toDateString(),
+      createdTime: this.formatDate(new Date(item._ts * 1000)),
     }));
   }
 
@@ -53,5 +53,17 @@ export class CosmosdbService
   private extractFileName(url: string): string {
     const parts = url.split('/');
     return parts[parts.length - 1];
+  }
+
+  private formatDate(date: Date): string
+  {
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, "0");
+
+    return `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
   }
 }
