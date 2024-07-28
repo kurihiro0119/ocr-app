@@ -9,6 +9,7 @@ const AnalysisResultTable = ({ receiptList }: { receiptList: ReceiptSummary[] })
 
   const handleRowClick = (id: string) =>
   {
+    console.log(`Row clicked: ${id}`);
     router.push(`/receipt/${id}`);
   }
 
@@ -16,8 +17,8 @@ const AnalysisResultTable = ({ receiptList }: { receiptList: ReceiptSummary[] })
     <table className="table-auto min-w-full text-left whitespace-no-wrap">
       <thead>
         <tr>
-          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">分析日時</th>
-          <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">アップロード ファイル</th>
+          <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-black rounded-tl rounded-bl">分析日時</th>
+          <th className="px-4 py-3 title-font tracking-wider font-medium text-white text-lg bg-black">アップロード ファイル</th>
         </tr>
       </thead>
       <tbody>
