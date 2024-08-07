@@ -17,7 +17,7 @@ COPY . .
 # RUN npm run build
 
 # アプリケーションのポートを指定
-EXPOSE 3000
+EXPOSE 8000
 
 # アプリケーションの起動コマンド
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:prod"]

@@ -26,7 +26,7 @@ COPY --from=0 /usr/src/app/.next /usr/share/nginx/html
 # COPY nginx.conf /etc/nginx/nginx.conf
 
 # ポートを指定
-EXPOSE 80
+EXPOSE 3000
 
 # Nginxの起動コマンド
 CMD ["nginx", "-g", "daemon off;"]
