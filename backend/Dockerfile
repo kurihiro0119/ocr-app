@@ -1,23 +1,25 @@
 # ベースイメージの指定
-FROM node:18
+FROM node:20-alpine
 
 # 作業ディレクトリの作成
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # package.jsonとpackage-lock.jsonをコピー
 COPY package*.json ./
 
 # 依存関係のインストール
+COPY package*.json ./
 RUN npm install
+RUN npm install -g @nestjs/cli
 
 # アプリケーションのソースをコピー
 COPY . .
 
 # アプリケーションをビルド（必要な場合）
-# RUN npm run build
+RUN npm run build
 
-# アプリケーションのポートを指定
-EXPOSE 8000
+# ビルドファイルをコピー
+COPY dist ./dist
 
 # アプリケーションの起動コマンド
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "dist/main"]
