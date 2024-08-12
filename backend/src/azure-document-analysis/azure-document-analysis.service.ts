@@ -13,7 +13,8 @@ export class AzureDocumentAnalysisService
   constructor(private configService: ConfigService)
   {
     const endpoint = this.configService.get<string>('AZURE_FORM_RECOGNIZER_ENDPOINT');
-    const credential = new AzureKeyCredential(this.configService.get<string>('AZURE_FORM_RECOGNIZER_API_KEY'));
+    const apiKey = this.configService.get<string>('AZURE_FORM_RECOGNIZER_API_KEY');
+    const credential = new AzureKeyCredential(apiKey);
     this.client = new DocumentAnalysisClient(endpoint, credential);
   }
 

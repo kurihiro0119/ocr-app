@@ -1,32 +1,36 @@
-# ベースイメージの指定
-FROM node:18
+# Stage 1: Build the Next.js application
+FROM node:20-alpine AS builder
 
-# 作業ディレクトリの作成
-WORKDIR /usr/src/app
+# 作業ディレクトリを設定
+WORKDIR /app
 
-# package.jsonとpackage-lock.jsonをコピー
+# 依存関係をインストール
 COPY package*.json ./
-
-# 依存関係のインストール
 RUN npm install
 
-# アプリケーションのソースをコピー
+# アプリケーションのソースコードをコピー
 COPY . .
 
-# アプリケーションをビルド
+# Next.js アプリケーションをビルド
 RUN npm run build
 
-# Nginxのベースイメージの指定
-FROM nginx:alpine
+# Stage 2: Run the application in a lightweight container
+FROM node:20-alpine
+
+# 作業ディレクトリを設定
+WORKDIR /app
+
+# 依存関係をインストール（production dependencies only）
+COPY package*.json ./
+RUN npm install --production
 
 # ビルドしたアプリケーションをコピー
-COPY --from=0 /usr/src/app/.next /usr/share/nginx/html
-
-# Nginxの設定ファイルをコピー（必要に応じて）
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./
 
 # ポートを指定
 EXPOSE 3000
 
-# Nginxの起動コマンド
-CMD ["nginx", "-g", "daemon off;"]
+# Next.js アプリケーションを起動
+CMD ["npm", "run", "start"]

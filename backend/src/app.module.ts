@@ -7,7 +7,10 @@ import { ReceiptController } from './receipt/receipt.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      ignoreEnvFile: false,
+    }),
     AzureStorageModule, AzureDocumentAnalysisModule, CosmosdbModule],
   controllers: [ReceiptController],
 })

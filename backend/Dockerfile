@@ -14,6 +14,7 @@ RUN npm install -g @nestjs/cli
 
 # アプリケーションのソースをコピー
 COPY . .
+COPY .env .env
 
 # アプリケーションをビルド（必要な場合）
 RUN npm run build
